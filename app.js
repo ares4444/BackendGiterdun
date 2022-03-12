@@ -7,13 +7,19 @@ const { MongoClient } = require("mongodb");
 const mongoose = require("mongoose");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+const { stringify } = require("querystring");
 const db = mongoose.connection;
+const { Schema } = mongoose;
 
 var app = express();
 
 // Connection URI
 const uri =
   "mongodb+srv://ourteam:1234@cluster0.fg9bn.mongodb.net/Back-EndProject?retryWrites=true&w=majority";
+
+const conn = mongoose.createConnection(
+  "mongodb+srv://ourteam:1234@cluster0.fg9bn.mongodb.net/Back-EndProject?retryWrites=true&w=majority"
+);
 
 // Create a new MongoClient
 const client = new MongoClient(uri);
@@ -31,15 +37,6 @@ async function run() {
 }
 run().catch(console.dir);
 
-//testing db
-const kittySchema = new mongoose.Schema({
-  name: String,
-});
-const conn = mongoose.createConnection(uri);
-const MyModel = conn.model("KittyModel", kittySchema);
-const m = new MyModel();
-m.save(); // works
-
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -50,6 +47,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
