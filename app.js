@@ -7,9 +7,6 @@ const { MongoClient } = require("mongodb");
 const mongoose = require("mongoose");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-const { stringify } = require("querystring");
-const db = mongoose.connection;
-const { Schema } = mongoose;
 
 var app = express();
 
@@ -17,25 +14,38 @@ var app = express();
 const uri =
   "mongodb+srv://ourteam:1234@cluster0.fg9bn.mongodb.net/Back-EndProject?retryWrites=true&w=majority";
 
-const conn = mongoose.createConnection(
-  "mongodb+srv://ourteam:1234@cluster0.fg9bn.mongodb.net/Back-EndProject?retryWrites=true&w=majority"
-);
-
-// Create a new MongoClient
-const client = new MongoClient(uri);
-async function run() {
+const connectDB = async () => {
   try {
-    // Connect the client to the server
-    await client.connect();
-    // Establish and verify connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Connected successfully to server");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+    await mongoose.connect(uri, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    });
+  } catch (err) {
+    console.log(err);
   }
-}
-run().catch(console.dir);
+};
+
+connectDB();
+
+// const conn = mongoose.createConnection(
+//   "mongodb+srv://ourteam:1234@cluster0.fg9bn.mongodb.net/Back-EndProject?retryWrites=true&w=majority"
+// );
+
+// // Create a new MongoClient
+// const client = new MongoClient(uri);
+// async function run() {
+//   try {
+//     // Connect the client to the server
+//     await client.connect();
+//     // Establish and verify connection
+//     await client.db("admin").command({ ping: 1 });
+//     console.log("Connected successfully to server");
+//   } finally {
+//     // Ensures that the client will close when you finish/error
+//     await client.close();
+//   }
+// }
+// run().catch(console.dir);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
