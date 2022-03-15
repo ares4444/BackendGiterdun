@@ -19,7 +19,6 @@
     "morgan": "^1.10.0"
   },
   "main": "app.js",
-  "devDependencies": {},
   "author": "",
   "license": "ISC",
   "description": ""
