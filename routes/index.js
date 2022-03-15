@@ -1,9 +1,12 @@
 var express = require("express");
 var router = express.Router();
+const User = require("../models/User");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index");
+router.get("/", async (req, res, next) => {
+  const allTodo = await User.find();
+  
+  res.render("index", {todo: allTodo});
 });
 
 router.get("/login", function (req, res, next) {

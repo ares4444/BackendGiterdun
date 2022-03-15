@@ -12,11 +12,32 @@ router.get("/", function (req, res, next) {
   res.send("respond with a resource");
 });
 
+router.post("/index", (req, res, next) => {
+  const {todo} = req.body;
+  const newTodo = new Todo({todo})
+
+  newTodo.save()
+  .then(() => {
+    console.log("successfully added Todo!");
+    res.redirect("/index.ejs");
+
+  })
+  .catch((err) => console.log(err));
+})
+.patch("index/:_id", (req, res) => {
+  const {_id} = req.params;
+  Todo.deleteOne({_id})
+  .then(() => {
+    console.log("Deleted Todo Successfully!");
+  })
+  .catch((err) => console.log(err));
+})
+
 router.post("/register", async function (req, res, next) {
   const { username, password, email } = req.body;
 
   try {
-    const hashedPassword = await bcrypt.hash(password, saltrounds);
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     //create and store user
     const result = await User.create({
