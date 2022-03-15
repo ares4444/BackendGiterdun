@@ -7,16 +7,13 @@ const { MongoClient } = require("mongodb");
 const mongoose = require("mongoose");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+require("dotenv").config();
 
 var app = express();
 
-// Connection URI
-const uri =
-  "mongodb+srv://ourteam:1234@cluster0.fg9bn.mongodb.net/Back-EndProject?retryWrites=true&w=majority";
-
 const connectDB = async () => {
   try {
-    await mongoose.connect(uri, {
+    await mongoose.connect(process.env.MONGO_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
