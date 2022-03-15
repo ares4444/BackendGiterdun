@@ -4,7 +4,7 @@ const User = require("../models/User");
 
 /* GET home page. */
 router.get("/", async (req, res, next) => {
-  const allTodo = await User.find();
+  // const allTodo = await User.find();
   
   res.render("index", {todo: allTodo});
 });

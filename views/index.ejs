@@ -6,20 +6,20 @@
 
 <body>
     <%- include('partials/body.ejs') %>
-    <h1>What To-Do</h1>
+    <!-- <h1>What To-Do</h1>
     <div class="container mt-5">
       <form action="/" method="POST" class="d-flex">
-        <input type="text" name="todo" class="form-control" placeholder="To-Do">
+        <input type="text" name="list" class="form-control" placeholder="To-Do">
         <input type="submit" value="Add To-Do" class="btn btn-md-primary mx-2">
       </form>
       <ul class="list-group my-5">
-        <% todo.forEach(todos => { %>
+        <% lists.forEach(list => { %>
           <li class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-          <%= todos.todo %><a href="/deleted/todo/<%= todo._id %>" class="btn btn-danger btn-sm">Delete</a></li>
+          <input class="form-check-input me-1" method="PATCH" type="checkbox" value="" aria-label="...">
+          <%= lists.list %><a href="../routes/index.js/list/:_id<%= lists._id %>" class="btn btn-danger btn-sm">Delete</a></li>
         <% }) %>
       </ul>
-    </div>
+    </div> -->
 </body>
 
 <footer>
