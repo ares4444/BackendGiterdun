@@ -12,8 +12,14 @@ router.get("/", function (req, res, next) {
   res.send("respond with a resource");
 });
 
-// router.post("/", (req, res, next) => {
-//   const {lists} = req.body;
+router.post("/newList", async (req, res, next) => {
+  const { newListName } = req.body;
+
+  const user = await User.findOne({
+    username: username,
+  });
+});
+
 //   const newList = new List({lists})
 //   console.log(lists);
 
@@ -46,8 +52,9 @@ router.post("/register", async function (req, res, next) {
       username: username,
       password: hashedPassword,
       email: email,
-    })
-    res.redirect("../login")
+      lists: {},
+    });
+    res.redirect("../login");
     console.log(result);
   } catch (err) {
     res.send(err);
@@ -69,6 +76,7 @@ router.post("/login", async (req, res, next) => {
       const token = jwt.sign(
         {
           data: user.username,
+          userId: user._id,
         },
         process.env.SECRET_KEY,
         { expiresIn: "1h" }
