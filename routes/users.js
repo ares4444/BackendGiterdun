@@ -44,7 +44,7 @@ router.post("/register", async function (req, res, next) {
     //create and store user
     const result = await User.create({
       username: username,
-      password: password,
+      password: hashedPassword,
       email: email,
     })
     res.redirect("../login")
@@ -64,6 +64,7 @@ router.post("/login", async (req, res, next) => {
 
   if (user) {
     const comparePasswords = bcrypt.compareSync(password, user.password);
+    console.log(comparePasswords);
     if (comparePasswords) {
       const token = jwt.sign(
         {
@@ -73,9 +74,8 @@ router.post("/login", async (req, res, next) => {
         { expiresIn: "1h" }
       );
 
-      res.cookie("userToken", token);
-      res.send("login successful");
-      res.render("/index");
+      res.cookie("token", token);
+      res.redirect(`/profile/${user._id}`);
     } else {
       res.send("incorrect password, try again");
     }
