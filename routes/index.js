@@ -20,11 +20,11 @@ router.get("/register", function (req, res, next) {
 });
 
 router.get('/profile/:id', isValidToken, async function(req, res, next) {
-  const {id} = req.params;
+  const { id } = req.params;
 
   const user = await User.findOne({
-    
-  })
+    _id: id
+  });
 
   res.render('profile', {name: user.username});
 });
