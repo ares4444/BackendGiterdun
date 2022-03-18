@@ -13,33 +13,25 @@ router.get("/", function (req, res, next) {
 });
 
 router.post("/newList", async (req, res, next) => {
+  const token = req.cookies["token"];
+  const decoded = jwt.verify(token, process.env.SECRET_KEY);
+  var userId = decoded.userId;
+  console.log(userId);
+
   const { newListName } = req.body;
 
   const user = await User.findOne({
-    username: username,
+    _id: userId,
   });
+
+  console.log("starting user list:", user.lists);
+
+  await User.findOneAndUpdate(
+    { _id: userId },
+    { $set: { lists: newListName } },
+    console.log("result:", user.lists)
+  );
 });
-
-//   const newList = new List({lists})
-//   console.log(lists);
-
-//   newList.save()
-//   .then(() => {
-//     console.log("successfully added List!");
-//     res.render("/index.ejs", {lists});
-
-//   })
-//   .catch((err) => console.log(err));
-// })
-// .patch("index/list/:_id", (req, res, next) => {
-//   const { _id } = req.params;
-//   lists.deleteOne({_id})
-//   .then(() => {
-//     console.log("Deleted Todo Successfully!");
-//     res.redirect("/")
-//   })
-//   .catch((err) => console.log(err));
-// });
 
 router.post("/register", async function (req, res, next) {
   const { username, password, email } = req.body;
@@ -71,7 +63,7 @@ router.post("/login", async (req, res, next) => {
 
   if (user) {
     const comparePasswords = bcrypt.compareSync(password, user.password);
-    console.log(comparePasswords);
+    // console.log(comparePasswords);
     if (comparePasswords) {
       const token = jwt.sign(
         {

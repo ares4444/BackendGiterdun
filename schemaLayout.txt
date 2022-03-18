@@ -1,28 +1,18 @@
+UserSchema
 {
-    //mongo will create unique ID for user
-    username:
-    password:
-    email:
-    lists: {
-        grocerylist: [tomatoes, chicken, etc],
-        exercises: [push, pull, jump]
+    _id: 15234326346
+    username: jack
+    password: j123
+    email: j123@gmail.com
+
 },
+
+
+ListSchema
 {
-    //mongo will create unique ID for user
-    username:
-    password:
-    email:
-    lists: {
-        grocerylist: [tomatoes, chicken, etc],
-        exercises: [push, pull, jump]
+    currentUserId: _id
+    listTitle:"Groceries"
+    tasks:[tomatoes, potatoes, chips]
 },
-{
-    //mongo will create unique ID for user
-    username:
-    password:
-    email:
-    lists: {
-        grocerylist: [tomatoes, chicken, etc],
-        exercises: [push, pull, jump]
-}
+
 
