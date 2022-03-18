@@ -14,5 +14,3 @@ ListSchema
     listTitle:"Groceries"
     tasks:[tomatoes, potatoes, chips]
 },
-
-

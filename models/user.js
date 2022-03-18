@@ -21,12 +21,4 @@ var userSchema = new Schema({
   refreshToken: String,
 });
 
-// var listSchema = new Schema({
-//   list: {
-//     type: { type: Schema.Types.ObjectId, ref: "User" },
-//     of: [String],
-//     items: [{ id: Number, name: String, value: Number }],
-//   },
-// });
-
 module.exports = mongoose.model("User", userSchema);

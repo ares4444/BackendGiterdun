@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const User = require("../models/User");
+const List = require("../models/List");
 const isValidToken = require("../middleware/isValidToken");
 const jwt = require("jsonwebtoken");
 // const User = require("../models/User");

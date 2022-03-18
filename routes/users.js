@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var mongoose = require("mongoose");
 const User = require("../models/User");
+const List = require("../models/List");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = bcrypt.genSaltSync(Number(process.env.SALT_FACTOR));
@@ -15,22 +16,32 @@ router.get("/", function (req, res, next) {
 router.post("/newList", async (req, res, next) => {
   const token = req.cookies["token"];
   const decoded = jwt.verify(token, process.env.SECRET_KEY);
-  var userId = decoded.userId;
-  console.log(userId);
+  var tokenUserId = decoded.userId;
 
   const { newListName } = req.body;
 
-  const user = await User.findOne({
-    _id: userId,
-  });
+  // const user = await User.findOne({
+  //   _id: tokenUserId,
+  // });
 
-  console.log("starting user list:", user.lists);
+  try {
+    //create and store List
+    const createdList = await List.create({
+      userId: tokenUserId,
+      listTitle: newListName,
+      tasks: [],
+    });
+    res.redirect(`/profile/${tokenUserId}`);
+    console.log(createdList);
+  } catch (err) {
+    res.send(err);
+  }
 
-  await User.findOneAndUpdate(
-    { _id: userId },
-    { $set: { lists: newListName } },
-    console.log("result:", user.lists)
-  );
+  // await User.findOneAndUpdate(
+  //   { _id: userId },
+  //   { $addToSet: { username: "thanos111" } },
+  //   console.log("result:", user.lists)
+  // );
 });
 
 router.post("/register", async function (req, res, next) {
@@ -44,7 +55,6 @@ router.post("/register", async function (req, res, next) {
       username: username,
       password: hashedPassword,
       email: email,
-      lists: {},
     });
     res.redirect("../login");
     console.log(result);
