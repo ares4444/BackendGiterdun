@@ -13,7 +13,7 @@ router.get("/", function (req, res, next) {
   res.send("respond with a resource");
 });
 
-router.post("/newList", async (req, res, next) => {
+router.post("profile/newList", async (req, res, next) => {
   const { list } = req.body;
   console.log(list);
 //   const user = await User.findOne({
@@ -21,23 +21,23 @@ router.post("/newList", async (req, res, next) => {
 //   });
 // });
 
-  const newList = new List({list})
+//   const newList = await new List({list})
   
-  newList.save()
-  .then(() => {
-    console.log("successfully added List!");
-    res.render("../views/profile.ejs", {list});
-    next()
-  })
-  .catch((err) => console.log(err))
-})
-.patch("/newList/:_id", (req, res, next) => {
-  const { _id } = req.params;
-  list.update({"items._id": 1}, {"$set": {
-    'items.$.name': 'updated item1',
-    'items.$.value': 'one updated'
-  }})
-  .catch((err) => console.log(err));
+//   newList.save()
+//   .then(() => {
+//     console.log("successfully added List!");
+//     res.render("../views/profile.ejs", {list});
+//     next()
+//   })
+//   .catch((err) => console.log(err))
+// })
+// .patch("/newList/:_id", (req, res, next) => {
+//   const { _id } = req.params;
+//   list.update({"items._id": 1}, {"$set": {
+//     'items.$.name': 'updated item1',
+//     'items.$.value': 'one updated'
+//   }})
+//   .catch((err) => console.log(err));
 });
 
 router.post("/register", async function (req, res, next) {
