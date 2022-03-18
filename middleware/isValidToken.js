@@ -10,7 +10,6 @@ const isValidToken = (req, res, next) => {
         process.env.SECRET_KEY,
         function(err, decoded) {
           if (decoded) {
-            console.log("This is my payload: ", decoded);
             next()
           } else {
             res.redirect('/error')

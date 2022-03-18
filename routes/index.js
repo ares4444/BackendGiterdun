@@ -8,9 +8,8 @@ const jwt = require("jsonwebtoken");
 
 /* GET home page. */
 router.get("/", async (req, res, next) => {
-  // const allTodo = await User.find();
-
-  res.render("index");
+  const allList = await List.find();
+  res.render("index", {list: allList})
 });
 
 router.get("/login", function (req, res, next) {
@@ -24,15 +23,15 @@ router.get("/register", function (req, res, next) {
 router.get("/profile/:id", isValidToken, async function (req, res, next) {
   const token = req.cookies["token"];
   const decoded = jwt.verify(token, process.env.SECRET_KEY);
-  var userId = decoded.userId;
+  var tokenUserId = decoded.userId;
   // console.log("the unique user ID is:", userId);
 
-  const user = await User.findOne({
-    _id: userId,
+  const list = await List.findOne({
+    userId: tokenUserId,
   });
 
   // console.log("user profile documents are:", user);
-  res.render("profile", { name: user.username, lists: user.lists });
+  res.render("profile", { listTitle: list.listTitle });
 });
 
 module.exports = router;
