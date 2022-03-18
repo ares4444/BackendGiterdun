@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var mongoose = require("mongoose");
 const User = require("../models/User");
+const List = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = bcrypt.genSaltSync(Number(process.env.SALT_FACTOR));
@@ -12,26 +13,30 @@ router.get("/", function (req, res, next) {
   res.send("respond with a resource");
 });
 
-router.post("/", (req, res, next) => {
-  const {lists} = req.body;
-  const newList = new List({lists})
-  console.log(lists);
+router.post("/newList", async (req, res, next) => {
+  const { list } = req.body;
+  console.log(list);
+//   const user = await User.findOne({
+//     username: username,
+//   });
+// });
 
+  const newList = new List({list})
+  
   newList.save()
   .then(() => {
     console.log("successfully added List!");
-    res.render("/index.ejs", {lists});
-
+    res.render("../views/profile.ejs", {list});
+    next()
   })
-  .catch((err) => console.log(err));
+  .catch((err) => console.log(err))
 })
-.patch("index/list/:_id", (req, res, next) => {
+.patch("/newList/:_id", (req, res, next) => {
   const { _id } = req.params;
-  lists.deleteOne({_id})
-  .then(() => {
-    console.log("Deleted Todo Successfully!");
-    res.redirect("/")
-  })
+  list.update({"items._id": 1}, {"$set": {
+    'items.$.name': 'updated item1',
+    'items.$.value': 'one updated'
+  }})
   .catch((err) => console.log(err));
 });
 
@@ -46,8 +51,9 @@ router.post("/register", async function (req, res, next) {
       username: username,
       password: hashedPassword,
       email: email,
-    })
-    res.redirect("../login")
+      lists: {},
+    });
+    res.redirect("../login");
     console.log(result);
   } catch (err) {
     res.send(err);
@@ -69,6 +75,7 @@ router.post("/login", async (req, res, next) => {
       const token = jwt.sign(
         {
           data: user.username,
+          userId: user._id,
         },
         process.env.SECRET_KEY,
         { expiresIn: "1h" }
