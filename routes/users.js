@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var mongoose = require("mongoose");
 const User = require("../models/User");
+const List = require("../models/List");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = bcrypt.genSaltSync(Number(process.env.SALT_FACTOR));
@@ -13,33 +14,35 @@ router.get("/", function (req, res, next) {
 });
 
 router.post("/newList", async (req, res, next) => {
+  const token = req.cookies["token"];
+  const decoded = jwt.verify(token, process.env.SECRET_KEY);
+  var tokenUserId = decoded.userId;
+
   const { newListName } = req.body;
 
-  const user = await User.findOne({
-    username: username,
-  });
+  // const user = await User.findOne({
+  //   _id: tokenUserId,
+  // });
+
+  try {
+    //create and store List
+    const createdList = await List.create({
+      userId: tokenUserId,
+      listTitle: newListName,
+      tasks: [],
+    });
+    res.redirect(`/profile/${tokenUserId}`);
+    console.log(createdList);
+  } catch (err) {
+    res.send(err);
+  }
+
+  // await User.findOneAndUpdate(
+  //   { _id: userId },
+  //   { $addToSet: { username: "thanos111" } },
+  //   console.log("result:", user.lists)
+  // );
 });
-
-//   const newList = new List({lists})
-//   console.log(lists);
-
-//   newList.save()
-//   .then(() => {
-//     console.log("successfully added List!");
-//     res.render("/index.ejs", {lists});
-
-//   })
-//   .catch((err) => console.log(err));
-// })
-// .patch("index/list/:_id", (req, res, next) => {
-//   const { _id } = req.params;
-//   lists.deleteOne({_id})
-//   .then(() => {
-//     console.log("Deleted Todo Successfully!");
-//     res.redirect("/")
-//   })
-//   .catch((err) => console.log(err));
-// });
 
 router.post("/register", async function (req, res, next) {
   const { username, password, email } = req.body;
@@ -52,7 +55,6 @@ router.post("/register", async function (req, res, next) {
       username: username,
       password: hashedPassword,
       email: email,
-      lists: {},
     });
     res.redirect("../login");
     console.log(result);
@@ -71,7 +73,7 @@ router.post("/login", async (req, res, next) => {
 
   if (user) {
     const comparePasswords = bcrypt.compareSync(password, user.password);
-    console.log(comparePasswords);
+    // console.log(comparePasswords);
     if (comparePasswords) {
       const token = jwt.sign(
         {
