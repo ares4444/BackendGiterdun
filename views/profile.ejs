@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%- include('partials/head.ejs')  %>
+  <%- include('partials/head.ejs') %>
 </head>
   <body>
     <%- include('partials/body.ejs') %>
@@ -13,19 +13,18 @@
               <div class="card" style="border-radius: 15px;">
                 <div class="card-body p-5">
       
-                  <h6 class="mb-3">Awesome Todo List</h6>
+                  <h6 class="mb-3"><%= listTitle %></h6>
       
-                  <form class="d-flex justify-content-center align-items-center mb-4" action="users/profile/newList" method="POST">
+                  <form class="d-flex justify-content-center align-items-center mb-4" action="users/newList" method="POST">
                     <div class="form-outline flex-fill">
-                      <input type="text" name="newList" id="form3" class="form-control form-control-lg" />
+                      <input type="text" name="newListName" id="form3" class="form-control form-control-lg" />
                       <label class="form-label" for="form3">What do you need to do today?</label>
                     </div>
                     <input type="submit" class="btn btn-primary btn-lg ms-2">Add</input>
                   </form>
       
                   <ul class="list-group mb-0">
-                    <% list.forEach(lists => { %>
-                    <li class="list-group-item d-flex justify-content-between align-items-center border-start-0 border-top-0 border-end-0 border-bottom rounded-0 mb-2"><%= lists.list %>
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-start-0 border-top-0 border-end-0 border-bottom rounded-0 mb-2">
                       <div class="d-flex align-items-center">
                         <input class="form-check-input me-2" type="checkbox" value="Add List" aria-label="..."/>
                         
@@ -34,7 +33,6 @@
                         <i class="fas fa-times text-primary"></i>
                       </a>
                     </li>
-                    <% }) %>
                   </ul>
                 </div>
               </div>
@@ -47,15 +45,5 @@
   <footer>
     <%- include('partials/footer.ejs') %>
 </footer>
-  <!-- <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-
-  <form action="/users/newList" method="POST">
-    <label> New List Name: <input type="text" name="newListName" /> </label>
-    <button type="submit">Create</button>
-  </form> -->
+ 
 </html>
