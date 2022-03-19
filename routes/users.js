@@ -20,8 +20,6 @@ router.post("/newList", async (req, res, next) => {
 
   const { newListName } = req.body;
 
-  
-
   try {
     //create and store List
     const createdList = await List.create({
@@ -34,25 +32,22 @@ router.post("/newList", async (req, res, next) => {
   } catch (err) {
     res.send(err);
   }
-
-  
 });
 
-router.post("/newTask", async (req, res, next) => {
+router.post("/newTask/", async (req, res, next) => {
   const token = req.cookies["token"];
   const decoded = jwt.verify(token, process.env.SECRET_KEY);
   var tokenUserId = decoded.userId;
-  
-  const { newTaskText } = req.body;
+
+  const { newTaskText, singleTitleName } = req.body;
 
   await List.findOneAndUpdate(
-    { userId: tokenUserId },
-    { $addToSet: { tasks: newTaskText } },
+    {
+      userId: tokenUserId,
+      listTitle: singleTitleName,
+    },
+    { $addToSet: { tasks: newTaskText } }
   );
-
-  
-
-  
 });
 
 router.post("/register", async function (req, res, next) {
@@ -104,7 +99,5 @@ router.post("/login", async (req, res, next) => {
     res.send("cannot find user");
   }
 });
-
-
 
 module.exports = router;

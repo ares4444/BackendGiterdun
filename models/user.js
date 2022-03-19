@@ -2,7 +2,6 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-  _id: Schema.Types.ObjectId,
   username: {
     type: String,
     required: true,
@@ -18,6 +17,5 @@ var userSchema = new Schema({
 
   refreshToken: String,
 });
-
 
 module.exports = mongoose.model("User", userSchema);
