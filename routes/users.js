@@ -34,20 +34,24 @@ router.post("/newList", async (req, res, next) => {
   }
 });
 
-router.post("/newTask/", async (req, res, next) => {
+router.post("/newTask/:listId", async (req, res, next) => {
   const token = req.cookies["token"];
   const decoded = jwt.verify(token, process.env.SECRET_KEY);
   var tokenUserId = decoded.userId;
 
-  const { newTaskText, singleTitleName } = req.body;
+  const { listId } = req.params;
+  console.log("button list ID is:", listId);
+  const { newTaskText } = req.body;
+  console.log("new task typed in:", newTaskText);
 
   await List.findOneAndUpdate(
     {
-      userId: tokenUserId,
-      listTitle: singleTitleName,
+      _id: listId,
     },
     { $addToSet: { tasks: newTaskText } }
   );
+
+  // res.render(`profile/${tokenUserId}`);
 });
 
 router.post("/register", async function (req, res, next) {
