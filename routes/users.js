@@ -34,12 +34,12 @@ router.post("/newList", async (req, res, next) => {
   }
 });
 
-router.post("/newTask/:listId", async (req, res, next) => {
+router.patch("/newTask/:listId/:listTitle", async (req, res, next) => {
   const token = req.cookies["token"];
   const decoded = jwt.verify(token, process.env.SECRET_KEY);
   var tokenUserId = decoded.userId;
 
-  const { listId } = req.params;
+  const { listId, listTitle } = req.params;
   console.log("button list ID is:", listId);
   const { newTaskText } = req.body;
   console.log("new task typed in:", newTaskText);
@@ -50,8 +50,6 @@ router.post("/newTask/:listId", async (req, res, next) => {
     },
     { $addToSet: { tasks: newTaskText } }
   );
-
-  // res.render(`profile/${tokenUserId}`);
 });
 
 router.post("/register", async function (req, res, next) {

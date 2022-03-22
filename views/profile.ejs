@@ -41,7 +41,7 @@
                       type="text"
                       id="form3"
                       class="form-control form-control-lg"
-                      name="newTaskText"
+                      name="<%= userLists.indexOf(list)%>"
                     />
                     <label class="form-label" for="form3">Tasks</label>
                   </div>
@@ -50,7 +50,8 @@
                     type="submit"
                     class="btn btn-primary btn-lg ms-2"
                     id="<%= list._id%>"
-                    onClick="routeToNewTask(this.id)"
+                    name="<%= list.listTitle%>"
+                    onClick="routeToNewTask(this.id, this.name)"
                   >
                     Add new task
                   </button>
@@ -86,8 +87,8 @@
   <footer><%- include('partials/footer.ejs') %></footer>
 
   <script type="text/javascript">
-    function routeToNewTask(clicked_id) {
-      fetch(`/users/newTask/${clicked_id}`, { method: "POST" });
+    function routeToNewTask(clicked_id, water) {
+      fetch(`/users/newTask/${clicked_id}/${water}`, { method: "PATCH" });
     }
   </script>
 </html>
