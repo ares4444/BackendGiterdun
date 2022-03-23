@@ -1,6 +1,7 @@
 <nav class="navbar navbar-light bg-light fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Git'Er Done</a>
+    <img src="/images/GitErDoneLogo.jpg" width="50" alt="" class="logo">
+    <a class="navbar-brand" href="#"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -12,27 +13,26 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-item">
-            <a class="nav-link active" name="index" aria-current="page" href="/">Home</a>
+            <a class="nav-link active" name="index" aria-current="page" href="/register">Register</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
+            <a class="nav-link active" name="index" aria-current="page" href="/login">Login</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
+              Profile
             </a>
             <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Active Lists</a></li>
+              <li><a class="dropdown-item" href="#">Create New List</a></li>
               <li>
-                <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li><a class="dropdown-item" href="#">Completed Lists</a></li>
             </ul>
           </li>
         </ul>
         <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <input class="form-control me-2" type="search" placeholder="Search List Templates" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
       </div>

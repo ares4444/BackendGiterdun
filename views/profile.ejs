@@ -4,9 +4,10 @@
     <%- include('partials/head.ejs') %>
   </head>
   <body>
-    <%- include('partials/body.ejs') %>
-
-    <section class="vh-100" style="background-color: #e2d5de">
+    <header>
+    <%- include('partials/header.ejs') %>
+    </header>
+    <section class="vh-100 bg-image" style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
       <div class="container py-5 h-100">
         <div style="padding-top: 200px">
           <form class="form-inline" action="/users/newList" method="POST">
