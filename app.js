@@ -1,5 +1,6 @@
 var createError = require("http-errors");
 var express = require("express");
+var methodOverride = require("method-override");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
@@ -24,25 +25,7 @@ const connectDB = async () => {
 
 connectDB();
 
-// const conn = mongoose.createConnection(
-//   "mongodb+srv://ourteam:1234@cluster0.fg9bn.mongodb.net/Back-EndProject?retryWrites=true&w=majority"
-// );
-
-// // Create a new MongoClient
-// const client = new MongoClient(uri);
-// async function run() {
-//   try {
-//     // Connect the client to the server
-//     await client.connect();
-//     // Establish and verify connection
-//     await client.db("admin").command({ ping: 1 });
-//     console.log("Connected successfully to server");
-//   } finally {
-//     // Ensures that the client will close when you finish/error
-//     await client.close();
-//   }
-// }
-// run().catch(console.dir);
+app.use(methodOverride("_method"));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
