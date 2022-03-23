@@ -3,6 +3,7 @@ var router = express.Router();
 var mongoose = require("mongoose");
 const User = require("../models/User");
 const List = require("../models/List");
+const Task = require("../models/Task");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = bcrypt.genSaltSync(Number(process.env.SALT_FACTOR));
@@ -38,20 +39,25 @@ router.post("/newTask/:listId", async (req, res, next) => {
   const token = req.cookies["token"];
   const decoded = jwt.verify(token, process.env.SECRET_KEY);
   var tokenUserId = decoded.userId;
+  console.log(tokenUserId);
 
   const { listId } = req.params;
   console.log("button list ID is:", listId);
   const { newTaskText } = req.body;
   console.log("new task typed in:", newTaskText);
 
-  await List.findOneAndUpdate(
-    {
-      _id: listId,
-    },
-    { $addToSet: { tasks: newTaskText } }
-  );
-
-  // res.render(`profile/${tokenUserId}`);
+  try {
+    //create and store Task
+    const createdTask = await Task.create({
+      userId: tokenUserId,
+      listId: listId,
+      task: newTaskText,
+    });
+    res.redirect(`/list/${listId}`);
+    console.log(createdTask);
+  } catch (err) {
+    res.send(err);
+  }
 });
 
 router.post("/register", async function (req, res, next) {
@@ -102,6 +108,15 @@ router.post("/login", async (req, res, next) => {
   } else {
     res.send("cannot find user");
   }
+});
+
+router.delete("/deleteTask/:taskId/:listId", async (req, res, next) => {
+  const { taskId, listId } = req.params;
+
+  await Task.findByIdAndRemove(taskId);
+  console.log("deleted task");
+
+  res.redirect(`/list/${listId}`);
 });
 
 module.exports = router;

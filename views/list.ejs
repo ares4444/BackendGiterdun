@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('partials/head.ejs') %>
+  </head>
+  <body>
+    <p><%= singleList.listTitle%></p>
+    <ul>
+      <% listTasks.forEach(task=>{ %>
+      <li>
+        <%= task.task%>
+        <form
+          action="/users/deleteTask/<%= task._id %>/<%= singleList._id %>?_method=DELETE"
+          method="POST"
+          class="d-inline"
+        >
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </li>
+      <% }) %>
+    </ul>
+
+    <form action="/users/newTask/<%= singleList._id%>" method="POST">
+      <label> New task: <input type="text" name="newTaskText" /> </label>
+
+      <button type="submit">Add New Task</button>
+    </form>
+
+    <a href="/profile/<%= singleList.userId%>">return to profile page</a>
+  </body>
+</html>
