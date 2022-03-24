@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <%- include('partials/head.ejs')  %>
-</head>
+  <head>
+    <%- include('partials/head.ejs') %>
+  </head>
 
-<body>
-    <%- include('partials/body.ejs') %>
-    
-</body>
+  <body>
+    <%- include('partials/header.ejs') %>
 
-<footer>
-    <%- include('partials/footer.ejs') %>
-</footer>
+    <section
+      class="vh-100 bg-image"
+      style="
+        background-image: url('/images/todolist2.jpg'); background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      "
+    ><div class="container d-flex justify-content-center align-items-center">
+      <div class="row" style="padding-top:150px">
+        <div class="span4"></div>
+        <div class="span4"><img class="center-block" src="/images/GitErDoneLogo.jpg" width="100%" alt=""class="logo" /></div>
+        <div class="span4"></div>
+      </div>
+  </div>
+        
+ </section>
+  </body>
+
+  <footer><%- include('partials/footer.ejs') %></footer>
 </html>
-
