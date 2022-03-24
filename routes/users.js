@@ -110,6 +110,14 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
+// router.delete("/deleteList/:listId", async (req, res, next) => {
+//   const { listId } = req.params;
+
+//   await List.findByIdAndRemove(listId);
+//   console.log("deleted list");
+//   res.redirect(`/list/${listId}`);
+// });
+
 router.delete("/deleteTask/:taskId/:listId", async (req, res, next) => {
   const { taskId, listId } = req.params;
 

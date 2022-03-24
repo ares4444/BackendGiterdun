@@ -5,23 +5,34 @@
   </head>
   <body>
     <header><%- include('partials/header.ejs') %></header>
-
     <section
       class="vh-100 bg-image"
       style="
-        background-image: url('/images/todolist1.jpg'); background-position: center;
+        background-image: url('/images/todolist3.jpg'); background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
       "
     >
       <div class="container py-5 d-flex justify-content-center">
           <form action="/users/newTask/<%= singleList._id%>" method="POST" style="padding-top: 50px">
-            <label> New task: <input type="text" name="newTaskText" /> </label>
-
-            <button type="submit">Add New Task</button>
+            <div class="form-group mx-sm-3 mb-2">
+              <label for="inputPassword2" class="sr-only"></label>
+              <input
+                type="text"
+                class="form-control"
+                id="inputPassword2"
+                placeholder="Add Task or Item"
+                name="newTaskName"
+              />
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary mb-2">
+                Add
+              </button>
+            </div>
           </form>
       </div>
-      <div class="container py-5 ml-auto">
+      <div class="container py-1 ml-auto">
           <ul class="list-group" >
             <li class="list-group-item active"><%= singleList.listTitle%></li>
             <% listTasks.forEach(task=>{ %>
@@ -29,7 +40,7 @@
               action="/users/deleteTask/<%= task._id %>/<%= singleList._id %>?_method=DELETE"
               method="POST"
               class="d-inline"
-            ><li class="list-group-item"><%= task.task%>
+            ><li class="list-group-item d-flex justify-content-between align-items-start"><%= task.task%>
               <button type="submit" class="btn btn-danger float-right
               ">Delete</button>
            </li> 
@@ -37,8 +48,12 @@
             <% }) %>
           </ul>
       </div>
-      <a href="/profile/<%= singleList.userId%>" class="d-flex justify-content-center">return to profile page</a>
+
+      <p class="text-center text-muted mt-5 mb-0">
+        Done with your list?
+      <a href="/profile/<%= singleList.userId%>" class="d-flex justify-content-center fw-bold text-body"><u>Return to Profile Page</u></a>
     </section>
    
   </body>
+  <footer><%- include('partials/footer.ejs') %></footer>
 </html>
