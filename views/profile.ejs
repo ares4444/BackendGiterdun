@@ -44,8 +44,12 @@
                 href="../list/<%= list._id%>"
                 class="list-group-item list-group-item-action"
                 ><%= list.listTitle%></a
+              ><form
+              action="/users/deleteList/<%= list._id %>?_method=DELETE"
+              method="POST"
+              class="d-inline"
               ><button type="submit" class="btn btn-danger float-right
-              ">Delete</button></li>
+              ">Delete</button></li></form>
               <% }) %>
             </ul>
             </div>

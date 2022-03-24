@@ -110,6 +110,20 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
+router.delete("/deleteList/:listId", async (req, res, next) => {
+  const token = req.cookies["token"];
+  const decoded = jwt.verify(token, process.env.SECRET_KEY);
+  var tokenUserId = decoded.userId;
+
+  const { listId } = req.params;
+
+  await List.findByIdAndRemove(listId);
+  await Task.deleteMany({listId: listId});
+  console.log("deleted list");
+
+  res.redirect(`/profile/${tokenUserId}`);
+});
+
 router.delete("/deleteTask/:taskId/:listId", async (req, res, next) => {
   const { taskId, listId } = req.params;
 
