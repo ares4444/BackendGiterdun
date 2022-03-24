@@ -9,7 +9,9 @@
     <section
       class="vh-100 bg-image"
       style="
-        background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');
+        background-image: url('/images/todolist1.jpg'); background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
       "
     >
       <div class="container py-5 d-flex justify-content-center">
@@ -19,18 +21,18 @@
             <button type="submit">Add New Task</button>
           </form>
       </div>
-      <div class="container py-5">
+      <div class="container py-5 ml-auto">
           <ul class="list-group" >
             <li class="list-group-item active"><%= singleList.listTitle%></li>
             <% listTasks.forEach(task=>{ %>
-            <li class="list-group-item"><%= task.task%>
             <form
               action="/users/deleteTask/<%= task._id %>/<%= singleList._id %>?_method=DELETE"
               method="POST"
               class="d-inline"
-            >
-              <button type="submit" class="btn btn-danger">Delete</button>
-            </li>
+            ><li class="list-group-item"><%= task.task%>
+              <button type="submit" class="btn btn-danger float-right
+              ">Delete</button>
+           </li> 
             </form>
             <% }) %>
           </ul>
