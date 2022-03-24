@@ -4,28 +4,39 @@
     <%- include('partials/head.ejs') %>
   </head>
   <body>
-    <p><%= singleList.listTitle%></p>
-    <ul>
-      <% listTasks.forEach(task=>{ %>
-      <li>
-        <%= task.task%>
-        <form
-          action="/users/deleteTask/<%= task._id %>/<%= singleList._id %>?_method=DELETE"
-          method="POST"
-          class="d-inline"
-        >
-          <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
-      </li>
-      <% }) %>
-    </ul>
+    <header><%- include('partials/header.ejs') %></header>
 
-    <form action="/users/newTask/<%= singleList._id%>" method="POST">
-      <label> New task: <input type="text" name="newTaskText" /> </label>
+    <section
+      class="vh-100 bg-image"
+      style="
+        background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');
+      "
+    >
+      <div class="container py-5 d-flex justify-content-center">
+          <form action="/users/newTask/<%= singleList._id%>" method="POST" style="padding-top: 50px">
+            <label> New task: <input type="text" name="newTaskText" /> </label>
 
-      <button type="submit">Add New Task</button>
-    </form>
-
-    <a href="/profile/<%= singleList.userId%>">return to profile page</a>
+            <button type="submit">Add New Task</button>
+          </form>
+      </div>
+      <div class="container py-5">
+          <ul class="list-group" >
+            <li class="list-group-item active"><%= singleList.listTitle%></li>
+            <% listTasks.forEach(task=>{ %>
+            <li class="list-group-item"><%= task.task%>
+            <form
+              action="/users/deleteTask/<%= task._id %>/<%= singleList._id %>?_method=DELETE"
+              method="POST"
+              class="d-inline"
+            >
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </li>
+            </form>
+            <% }) %>
+          </ul>
+      </div>
+      <a href="/profile/<%= singleList.userId%>" class="d-flex justify-content-center">return to profile page</a>
+    </section>
+   
   </body>
 </html>
