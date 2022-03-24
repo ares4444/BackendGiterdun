@@ -4,12 +4,15 @@
     <%- include('partials/head.ejs') %>
   </head>
   <body>
-    <header>
-    <%- include('partials/header.ejs') %>
-    </header>
-    <section class="vh-100 bg-image" style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+    <header><%- include('partials/header.ejs') %></header>
+    <section
+      class="vh-100 bg-image"
+      style="
+        background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');
+      "
+    >
       <div class="container py-5 h-100">
-        <div style="padding-top: 200px">
+        <div style="padding-top: 50px">
           <form class="form-inline" action="/users/newList" method="POST">
             <div class="form-group mx-sm-3 mb-2">
               <label for="inputPassword2" class="sr-only"></label>
@@ -17,22 +20,31 @@
                 type="text"
                 class="form-control"
                 id="inputPassword2"
-                placeholder="List Name"
+                placeholder="New List Name"
                 name="newListName"
               />
             </div>
-            <button type="submit" class="btn btn-primary mb-2">
-              Create New List
-            </button>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary mb-2">
+                Create New List
+              </button>
+            </div>
           </form>
+
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action active">
+              Your Lists:
+            </a>
+
+            <% userLists.forEach(list=>{ %>
+            <a
+              href="../list/<%= list._id%>"
+              class="list-group-item list-group-item-action"
+              ><%= list.listTitle%></a
+            >
+            <% }) %>
+          </div>
         </div>
-        <ul>
-          <% userLists.forEach(list=>{ %>
-          <li>
-            <a href="../list/<%= list._id%>"><%= list.listTitle%></a>
-          </li>
-          <% }) %>
-        </ul>
       </div>
     </section>
   </body>
