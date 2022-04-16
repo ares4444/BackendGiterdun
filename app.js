@@ -1,41 +1,31 @@
 var createError = require("http-errors");
 var express = require("express");
+var methodOverride = require("method-override");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ServerApiVersion } = require("mongodb");
 const mongoose = require("mongoose");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-const { stringify } = require("querystring");
-const db = mongoose.connection;
-const { Schema } = mongoose;
+require("dotenv").config();
 
 var app = express();
 
-// Connection URI
-const uri =
-  "mongodb+srv://ourteam:1234@cluster0.fg9bn.mongodb.net/Back-EndProject?retryWrites=true&w=majority";
-
-const conn = mongoose.createConnection(
-  "mongodb+srv://ourteam:1234@cluster0.fg9bn.mongodb.net/Back-EndProject?retryWrites=true&w=majority"
-);
-
-// Create a new MongoClient
-const client = new MongoClient(uri);
-async function run() {
+const connectDB = async () => {
   try {
-    // Connect the client to the server
-    await client.connect();
-    // Establish and verify connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Connected successfully to server");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+    await mongoose.connect(process.env.MONGO_URI, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    });
+  } catch (err) {
+    console.log(err);
   }
-}
-run().catch(console.dir);
+};
+
+connectDB();
+
+app.use(methodOverride("_method"));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));

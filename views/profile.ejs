@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('partials/head.ejs') %>
+  </head>
+  <body>
+    <header><%- include('partials/header.ejs') %></header>
+    <section
+      class="vh-100 bg-image"
+      style="
+        background-image: url('/images/todolist3.jpg'); background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      "
+    >
+      <div class="container py-5 h-100">
+        <div style="padding-top: 50px">
+          <form class="form-inline" action="/users/newList" method="POST">
+            <div class="form-group mx-sm-3 mb-2">
+              <label for="inputPassword2" class="sr-only"></label>
+              <input
+                type="text"
+                class="form-control"
+                id="inputPassword2"
+                placeholder="New List Name"
+                name="newListName"
+              />
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary mb-2">
+                Create New List
+              </button>
+            </div>
+          </form>
+
+          <div class="list-group">
+            <div class="container py-1 ml-auto">
+              <a href="#" class="list-group-item list-group-item-action active">
+                Your Lists:
+              </a>
+              <ul class="list-group" >
+              <% userLists.forEach(list=>{ %>
+                <li class="list-group-item d-flex justify-content-between align-items-start"><a
+                href="../list/<%= list._id%>"
+                class="list-group-item list-group-item-action"
+                ><%= list.listTitle%></a
+              ><form
+              action="/users/deleteList/<%= list._id %>?_method=DELETE"
+              method="POST"
+              class="d-inline"
+              ><button type="submit" class="btn btn-danger float-right
+              ">Delete</button></li></form>
+              <% }) %>
+            </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+  <footer><%- include('partials/footer.ejs') %></footer>
+</html>
