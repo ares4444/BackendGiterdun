@@ -30,7 +30,7 @@ mongoose.connection.once("open", () => {
   console.log("connected to mongoDB");
 
   server.listen(port, () => {
-    console.log(`Is it done yet?!! on the http://localhost:9000/.netlify/functions/api/test`);
+    console.log(`Is it done yet?!! on the http://localhost:${port}`);
   });
   server.on("error", onError);
   server.on("listening", onListening);
